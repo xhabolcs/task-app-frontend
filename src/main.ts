@@ -5,6 +5,7 @@ import * as directives from 'vuetify/directives'
 import { createApp } from 'vue'
 import App from './App.vue'
 import './index.css'
+import '@mdi/font/css/materialdesignicons.css'
 
 const vuetify = createVuetify({
   components,
