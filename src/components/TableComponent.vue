@@ -1,112 +1,150 @@
 <script setup lang="ts">
-const items = [
+import { ref } from 'vue'
+
+interface ToDos {
+  id: string
+  userId: string
+  description: string
+  estimatedTime: string
+  usedTime: string
+  createdAt: Date
+  completedAt: Date
+}
+
+const headers = [
+  { title: 'Id', key: 'id' },
+  { title: 'User Id', key: 'userId' },
+  { title: 'Description', key: 'description' },
+  { title: 'Estimated Time', key: 'estimatedTime' },
+  { title: 'Used Time', key: 'usedTime' },
+  { title: 'Created At', key: 'createdAt' },
+  { title: 'Completed At', key: 'completedAt' }
+]
+
+const selected = ref<ToDos[]>([])
+
+const items: ToDos[] = [
   {
-    description: 'Go to shop',
+    id: '1',
     userId: '1',
+    description: 'Go to shop',
     estimatedTime: '2h',
     usedTime: '1h',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
-    description: 'Clean the kitchen',
+    id: '2',
     userId: '2',
+    description: 'Clean the kitchen',
     estimatedTime: '1h',
     usedTime: '',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
-    description: 'Maintain the bike',
+    id: '3',
     userId: '3',
+    description: 'Maintain the bike',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '4',
+    userId: '1',
     description: 'Ride the bike',
-    userId: '4',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '5',
+    userId: '2',
     description: 'Go hike',
-    userId: '5',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '6',
+    userId: '3',
     description: 'Drink water',
-    userId: '6',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '7',
+    userId: '1',
     description: 'Play football',
-    userId: '7',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '8',
+    userId: '2',
     description: 'Do the job',
-    userId: '8',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '9',
+    userId: '3',
     description: 'Obey the rules',
-    userId: '9',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '10',
+    userId: '1',
     description: 'Have fun',
-    userId: '10',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '11',
+    userId: '2',
     description: 'Star gazing',
-    userId: '11',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '12',
+    userId: '3',
     description: 'Go to Békéscsaba',
-    userId: '12',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '13',
+    userId: '1',
     description: 'Kiss your girlfriend',
-    userId: '13',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
     completedAt: new Date()
   },
   {
+    id: '14',
+    userId: '2',
     description: 'Be happy',
-    userId: '14',
     estimatedTime: '1h ',
     usedTime: '30m',
     createdAt: new Date(),
@@ -114,17 +152,22 @@ const items = [
   }
 ]
 
-let selected: any[] = []
+const onSelectionUpdate = (newSelection: ToDos[]) => {
+  selected.value = newSelection
+}
 </script>
 
 <template>
-  <v-app>
-    <v-container>
-      <v-data-table
-        v-model="selected"
-        :items="items"
-        :header-props="{ 'sort-icon': 'mdi-triangle-down' }"
-      ></v-data-table>
-    </v-container>
-  </v-app>
+  <v-data-table
+    id="table"
+    show-select
+    select-strategy="page"
+    :items="items"
+    :headers="headers"
+    item-key="id"
+    class="elevation-1"
+    :model-value="selected"
+    @update:model-value="onSelectionUpdate"
+  >
+  </v-data-table>
 </template>
